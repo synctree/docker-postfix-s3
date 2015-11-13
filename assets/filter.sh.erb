@@ -1,0 +1,19 @@
+#!/bin/sh
+SENDER="$1"
+RECIPIENT="$2"
+LOGFILE=/tmp/filter.log
+
+WORKDIR=`mktemp -d /tmp/filter-$(date +%s)-XXXX`
+cd $WORKDIR
+
+# unpacks the attachments read from stdin
+munpack | while read line ; do
+  filename="$(echo "$line" | cut -d\  -f1)"
+  directory="$(echo "$RECIPIENT" | cut -d@ -f1)"
+  echo "Received mail with $@, attached file $filename" >> "$LOGFILE"
+  cat "$filename" >> /tmp/filter.log
+  echo aws s3 cp "$filename" "s3://<%= ENV['S3_BUCKET'] %>/$directory/$filename" >> /tmp/filter.log
+done
+
+# clean up
+rm -r "$WORKDIR"
