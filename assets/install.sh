@@ -7,8 +7,8 @@ set -x
 #   exit 0
 # fi
 
-if [[ -z "$maildomain" || -z "$S3_BUCKET" ]] ; then
-  echo "You must set \$maildomain and \$S3_BUCKET for this container to be useful"
+if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET" ]] ; then
+  echo "You must set \$MAIL_DOMAIN and \$S3_BUCKET for this container to be useful"
   exit 1
 fi
 chmod +x /opt/interpolate.rb
@@ -22,8 +22,8 @@ chmod +x /opt/filter.sh
 chmod +x /opt/postfix.sh
 
 postconf -e content_filter=filter:dummy
-postconf -e myhostname=$maildomain
+postconf -e myhostname=$MAIL_DOMAIN
 
 # defaults to 500MB
-postconf -e message_size_limit=${max_attachment_size:-509600000}
+postconf -e message_size_limit=${MAX_ATTACHMENT_SIZE:-509600000}
 postconf -F '*/*/chroot = n'
