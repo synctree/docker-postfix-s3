@@ -1,3 +1,3 @@
 #!/bin/bash
 service postfix restart
-tail -f /var/log/mail.log
+tail -f /tmp/filter.log
