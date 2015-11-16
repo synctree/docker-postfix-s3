@@ -9,7 +9,7 @@ set -x
 
 if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET" ]] ; then
   echo "You must set \$MAIL_DOMAIN and \$S3_BUCKET for this container to be useful"
-  exit 1
+  # exit 1
 fi
 chmod +x /opt/interpolate.rb
 
