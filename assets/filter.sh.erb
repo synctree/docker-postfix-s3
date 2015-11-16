@@ -12,7 +12,7 @@ munpack | while read line ; do
   directory="$(echo "$RECIPIENT" | cut -d@ -f1)"
   echo "Received mail with $@, attached file $filename" >> "$LOGFILE"
   cat "$filename" >> /tmp/filter.log
-  echo aws s3 cp "$filename" "s3://<%= ENV['S3_BUCKET'] %>/$directory/$filename" >> /tmp/filter.log
+  aws s3 cp "$filename" "s3://<%= ENV['S3_BUCKET'] %>/$directory/$filename" >> /tmp/filter.log
 done
 
 # clean up
