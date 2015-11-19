@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 
 # Install packages here so they're preserved in the cache
-RUN apt-get -y install supervisor postfix mpack ruby2.0
+RUN apt-get -y install supervisor postfix mpack ruby2.0 awscli
 
 RUN adduser filter --disabled-password --no-create-home
 RUN mkdir /var/spool/filter
