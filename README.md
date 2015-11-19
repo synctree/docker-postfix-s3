@@ -9,6 +9,7 @@ docker-postfix
 + `S3_BUCKET`: The bucket name to send mail to (e.g. `my-mail-bucket`)
 
 ## Instance Role
+```
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -24,3 +25,4 @@ docker-postfix
         }
     ]
 }
+```
