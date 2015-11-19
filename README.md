@@ -3,6 +3,11 @@ docker-postfix
 ## Requirement
 + Docker 1.0
 
+## Configuration
+
++ `MAIL_DOMAIN`: The domain to accept mail on (e.g. `inbox.example.org`)
++ `S3_BUCKET`: The bucket name to send mail to (e.g. `my-mail-bucket`)
+
 ## Instance Role
 {
     "Version": "2012-10-17",
