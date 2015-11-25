@@ -76,8 +76,8 @@
           "apt-get install -y git",
 
           "# Run bootstrap",
-          "git clone git@github.com:synctree/docker-postfix-s3.git /opt/docker-postfix-s3",
-          { "Fn::Join" : ["", ["export S3_BUCKET=", { "Fn::Ref": "S3Bucket" }]]},
+          "git clone https://github.com/synctree/docker-postfix-s3.git /opt/docker-postfix-s3",
+          { "Fn::Join" : ["", ["export S3_BUCKET=", { "Ref": "S3Bucket" }]]},
           { "Fn::Join" : ["", ["export MAIL_DOMAIN=", { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" }]]}]]},
           "/bin/bash /opt/docker-postfix-s3/assets/cloudformation.sh",
 
@@ -168,9 +168,12 @@
       "Properties": {
         "HostedZoneName": "conversionlogic.net.",
         "Name": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" } ]]},
-        "Type": "A",
+        "Type": "MX",
         "TTL": "900",
-        "ResourceRecords": [ { "Fn::GetAtt": [ "PostfixS3Instance", "PublicIp" ] } ],
+        "ResourceRecords": [ { "Fn::Join" : ["\n", [
+          "10",
+          { "Fn::GetAtt": [ "PostfixS3Instance", "PublicIp" ] }
+        ]]}],
         "Comment": "Created by postfix-s3 CloudFormation Template"
       }
     },
@@ -196,11 +199,11 @@
               {
                 "Effect": "Allow",
                 "Action": [ "s3:*" ],
-                "Resource": { "Fn::Join" : [ "",
+                "Resource": { "Fn::Join" : [ "", [
                   "arn:aws:s3:::",
                   { "Ref": "S3Bucket" },
                   "/*"
-                ]}
+                ]]}
               }
             ]
           }
@@ -215,6 +218,14 @@
         "Path": "/",
         "Roles": [ { "Ref": "PostfixS3Role" } ]
       }
+    },
+    "PostfixS3Bucket" : {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "AccessControl" : "Private",
+        "BucketName" : { "Ref": "S3Bucket" }
+      },
+      "DeletionPolicy" : "Retain"
     }
   },
 

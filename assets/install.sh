@@ -23,6 +23,8 @@ chmod +x /opt/docker-postfix-s3/assets/postfix.sh
 
 postconf -e content_filter=filter:dummy
 postconf -e myhostname=${MAIL_DOMAIN%.}
+postconf -e mydestination=$myhostname,localhost
+postconf -e receive_override_options=no_unknown_recipient_checks
 
 # defaults to 500MB
 postconf -e message_size_limit=${MAX_ATTACHMENT_SIZE:-509600000}
