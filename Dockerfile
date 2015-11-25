@@ -1,22 +1,12 @@
 From ubuntu:trusty
 MAINTAINER Bryan Conrad
 
-# Set noninteractive mode for apt-get
-ENV DEBIAN_FRONTEND noninteractive
-
-# Update
-RUN apt-get update
-
-# Install packages here so they're preserved in the cache
-RUN apt-get -y install supervisor postfix mpack ruby2.0 awscli mailutils
-
-RUN adduser filter --disabled-password --no-create-home
-RUN mkdir /var/spool/filter
-RUN chown filter:filter /var/spool/filter
+ADD assets/build.sh /opt/docker-postfix-s3/assets/build.sh
+RUN /bin/bash /opt/docker-postfix-s3/assets/build.sh
 
 # Stage scripts and config files
-ADD assets/ /opt/
+ADD assets/ /opt/docker-postfix-s3/assets/
 
 # Run
 EXPOSE 25
-CMD /opt/install.sh && /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+CMD /opt/docker-postfix-s3/assets/install.sh && /usr/bin/supervisord -c /etc/supervisor/supervisord.conf

@@ -1,3 +1,2 @@
 #!/bin/bash
-
-docker build -t synctree/postfix-s3 .
+docker build -t kaen/postfix-s3 .
