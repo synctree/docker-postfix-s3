@@ -22,7 +22,7 @@ chmod +x /opt/docker-postfix-s3/assets/filter.sh
 chmod +x /opt/docker-postfix-s3/assets/postfix.sh
 
 postconf -e content_filter=filter:dummy
-postconf -e myhostname=$MAIL_DOMAIN
+postconf -e myhostname=${MAIL_DOMAIN%.}
 
 # defaults to 500MB
 postconf -e message_size_limit=${MAX_ATTACHMENT_SIZE:-509600000}
