@@ -170,7 +170,7 @@
         "Name": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" } ]]},
         "Type": "MX",
         "TTL": "900",
-        "ResourceRecords": [ { "Fn::Join" : ["\n", [
+        "ResourceRecords": [ { "Fn::Join" : [" ", [
           "10",
           { "Fn::GetAtt": [ "PostfixS3Instance", "PublicIp" ] }
         ]]}],
