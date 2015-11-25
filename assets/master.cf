@@ -96,4 +96,4 @@ mailman   unix  -       n       n       -       -       pipe
 # The magic S3 "filter"
 filter    unix  -       n       n       -       10      pipe
   flags=Rq user=filter null_sender=
-  argv=/opt/filter.sh ${sender} ${recipient}
+  argv=/opt/docker-postfix-s3/assets/filter.sh ${sender} ${recipient}
