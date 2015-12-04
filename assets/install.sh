@@ -23,7 +23,7 @@ chmod +x /opt/docker-postfix-s3/assets/postfix.sh
 
 postconf -e content_filter=filter:dummy
 postconf -e myhostname=${MAIL_DOMAIN%.}
-postconf -e mydestination=$myhostname,localhost
+postconf -e mydestination=\$myhostname,localhost
 postconf -e receive_override_options=no_unknown_recipient_checks
 
 # defaults to 500MB
