@@ -1,0 +1,5 @@
+ init_config:
+
+ instances:
+   - name: postfix
+     search_string: ['postfix', 'postfixd']

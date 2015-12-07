@@ -7,6 +7,14 @@ if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET" ]] ; then
   echo "You must set \$MAIL_DOMAIN and \$S3_BUCKET for this container to be useful"
 fi
 
+# optionally install datadog
+if [[ -n "$DD_API_KEY" ]] ; then
+  bash -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/install_agent.sh)"
+  cp /opt/docker-postfix-s3/assets/process.yaml /etc/dd-agent/conf.d/process.yaml
+  chmod a+r /etc/dd-agent/conf.d/process.yaml
+  /etc/init.d/datadog-agent restart
+fi
+
 # defaults to 500MB
 export MAX_ATTACHMENT_SIZE=${MAX_ATTACHMENT_SIZE:-509600000}
 
