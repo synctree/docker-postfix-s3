@@ -168,14 +168,11 @@
     "ExternalDnsRecord": {
       "Type": "AWS::Route53::RecordSet",
       "Properties": {
-        "HostedZoneName": "conversionlogic.net.",
+        "HostedZoneName": { "Fn::Join": [ "", [ { "Ref": "Domain" }, "." ]],
         "Name": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" } ]]},
         "Type": "MX",
         "TTL": "900",
-        "ResourceRecords": [ { "Fn::Join" : [" ", [
-          "10",
-          { "Fn::GetAtt": [ "PostfixS3Instance", "PublicIp" ] }
-        ]]}],
+        "ResourceRecords": [ { "Fn::Join" : [" ", ["10", { "Fn::GetAtt": [ "PostfixS3Instance", "PublicIp" ] } ]]}],
         "Comment": "Created by postfix-s3 CloudFormation Template"
       }
     },
