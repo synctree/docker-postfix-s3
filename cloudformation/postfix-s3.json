@@ -6,6 +6,7 @@
     "InstanceVolumeType": { "Type": "String", "Default": "gp2"},
     "Domain": { "Type": "String", "Default": "example.org"},
     "Subdomain": { "Type": "String", "Default": "inbox-dev"},
+    "DatadogAPIKey": { "Type": "String", "Default": ""},
     "S3Bucket": { "Type": "String", "Default": "my-mail-bucket"}
   },
 
@@ -77,6 +78,7 @@
 
           "# Run bootstrap",
           "git clone https://github.com/synctree/docker-postfix-s3.git /opt/docker-postfix-s3",
+          { "Fn::Join" : ["", ["export DD_API_KEY=", { "Ref": "DatadogAPIKey" }]]},
           { "Fn::Join" : ["", ["export S3_BUCKET=", { "Ref": "S3Bucket" }]]},
           { "Fn::Join" : ["", ["export MAIL_DOMAIN=", { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" }]]}]]},
           "/bin/bash /opt/docker-postfix-s3/assets/cloudformation.sh",
