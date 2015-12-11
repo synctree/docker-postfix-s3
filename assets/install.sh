@@ -9,6 +9,14 @@ if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET"  || -z "$WHITELIST_URI" ]] ; then
   echo "You must set \$MAIL_DOMAIN, \$WHITELIST_URI and \$S3_BUCKET for this container to be useful"
 fi
 
+# save env vars for scripts to use
+cat > /etc/profile.d/postfix-s3-envvars <<EOF
+MAIL_DOMAIN=$MAIL_DOMAIN
+MAX_ATTACHMENT_SIZE=$MAX_ATTACHMENT_SIZE
+S3_BUCKET=$S3_BUCKET
+WHITELIST_URI=$WHITELIST_URI
+EOF
+
 # optionally install datadog
 if [[ -n "$DD_API_KEY" ]] ; then
   bash -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/install_agent.sh)"
@@ -19,14 +27,6 @@ fi
 
 # defaults to 500MB
 export MAX_ATTACHMENT_SIZE=${MAX_ATTACHMENT_SIZE:-509600000}
-
-# save env vars for scripts to use
-cat > /etc/profile.d/postfix-s3-envvars <<EOF
-MAIL_DOMAIN=$MAIL_DOMAIN
-MAX_ATTACHMENT_SIZE=$MAX_ATTACHMENT_SIZE
-S3_BUCKET=$S3_BUCKET
-WHITELIST_URI=$WHITELIST_URI
-EOF
 
 chmod a+rx /etc/profile.d/postfix-s3-envvars
 
