@@ -151,7 +151,7 @@
             "commands": {
               "deploy-postfix-s3": {
                 "cwd": "/",
-                "command": "git clone https://github.com/synctree/docker-postfix-s3.git /opt/docker-postfix-s3"
+                "command": "rm -rf /opt/docker-postfix-s3 ; git clone https://github.com/synctree/docker-postfix-s3.git /opt/docker-postfix-s3"
               }
             }
           },
