@@ -3,8 +3,8 @@ set -e
 set -x
 
 # check for important vars
-if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET" ]] ; then
-  echo "You must set \$MAIL_DOMAIN and \$S3_BUCKET for this container to be useful"
+if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET"  || -z "$WHITELIST_URI" ]] ; then
+  echo "You must set \$MAIL_DOMAIN, \$WHITELIST_URI and \$S3_BUCKET for this container to be useful"
 fi
 
 # optionally install datadog
@@ -23,6 +23,7 @@ cat > /etc/profile.d/postfix-s3-envvars <<EOF
 MAIL_DOMAIN=$MAIL_DOMAIN
 MAX_ATTACHMENT_SIZE=$MAX_ATTACHMENT_SIZE
 S3_BUCKET=$S3_BUCKET
+WHITELIST_URI=$WHITELIST_URI
 EOF
 
 chmod a+rx /etc/profile.d/postfix-s3-envvars
