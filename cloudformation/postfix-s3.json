@@ -7,7 +7,8 @@
     "Domain": { "Type": "String", "Default": "example.org"},
     "Subdomain": { "Type": "String", "Default": "inbox-dev"},
     "DatadogAPIKey": { "Type": "String", "Default": ""},
-    "S3Bucket": { "Type": "String", "Default": "my-mail-bucket"}
+    "S3Bucket": { "Type": "String", "Default": "my-mail-bucket"},
+    "WhitelistURI": { "Type": "String", "Default": ""}
   },
 
   "Mappings": {
@@ -143,7 +144,7 @@
                   "runas=root"
                 ]]}
               }
-            },
+            }
           },
 
           "app-bootstrap": {
@@ -162,8 +163,9 @@
                 "command": "git pull && /bin/bash /opt/docker-postfix-s3/assets/cloudformation.sh",
                 "env": {
                   "DD_API_KEY": { "Ref": "DatadogAPIKey" },
+                  "WHITELIST_URI": { "Ref": "WhitelistURI" },
                   "S3_BUCKET": { "Ref": "S3Bucket" },
-                  "MAIL_DOMAIN": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" }]]},
+                  "MAIL_DOMAIN": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" }]]}
                 }
               }
             }
@@ -175,7 +177,7 @@
     "ExternalDnsRecord": {
       "Type": "AWS::Route53::RecordSet",
       "Properties": {
-        "HostedZoneName": { "Fn::Join": [ "", [ { "Ref": "Domain" }, "." ]],
+        "HostedZoneName": { "Fn::Join": [ "", [ { "Ref": "Domain" }, "." ]]},
         "Name": { "Fn::Join": [ ".", [ { "Ref": "Subdomain" }, { "Ref": "Domain" } ]]},
         "Type": "MX",
         "TTL": "900",
