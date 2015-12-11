@@ -2,6 +2,8 @@
 set -e
 set -x
 
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 # check for important vars
 if [[ -z "$MAIL_DOMAIN" || -z "$S3_BUCKET"  || -z "$WHITELIST_URI" ]] ; then
   echo "You must set \$MAIL_DOMAIN, \$WHITELIST_URI and \$S3_BUCKET for this container to be useful"
