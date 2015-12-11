@@ -75,7 +75,7 @@
           "apt-get -y upgrade",
 
           "# Install bootstrap packages",
-          "apt-get install -y git",
+          "apt-get install -y git python-setuptools",
 
           "# Install aws-cfn-bootstrap-latest from S3 tarball",
           "mkdir aws-cfn-bootstrap-latest",
