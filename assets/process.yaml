@@ -2,4 +2,4 @@
 
  instances:
    - name: postfix
-     search_string: ['postfix', 'postfixd']
+     search_string: ['master', 'postfix', 'postfixd']
